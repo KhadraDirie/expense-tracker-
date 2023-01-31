@@ -4,19 +4,19 @@
 //a new state must be created 
 
 export default (state, action) => {
-    switch(action.type) {
-      case 'Delete_transaction':
-        return {
-          ...state,
-          transactions: state.transactions.filter(transaction => transaction.id !== action.payload), // sends down all the transactions except the one that was deleted
-        };
-        case 'Add_transaction' :
-          return {
-            ...state,
-            transactions: [action.payload,...state.transactions]
-          }
-      default:
-        return state;
-    }
-  };
+  switch(action.type) {
+    case 'DELETE_TRANSACTION':
+      return {
+        ...state,
+        transactions: state.transactions.filter(transaction => transaction.id !== action.payload)
+      }
+    case 'ADD_TRANSACTION':
+      return {
+        ...state,
+        transactions: [action.payload, ...state.transactions]
+      }
+    default:
+      return state;
+  }
+}
   

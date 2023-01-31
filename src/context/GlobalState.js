@@ -1,56 +1,60 @@
-import React, {createContext,useReducer} from 'react'
-import AppReducer from '../context/AppReducer'
+
+import React, { createContext, useReducer } from 'react';
+import AppReducer from './AppReducer';
 
 
-
-//Initial state 
-const initialState = {
-    transactions: [
-{ id: 1, text: 'Groceries', amount: -40 },
-  { id: 2, text: 'Rent', amount: -700 },
-  { id: 3, text: 'Utilities', amount: -80 },
-  { id: 4, text: 'Salary', amount: 2500 },
-  { id: 5, text: 'Payment', amount: 200 }
-]
-
-    
-}
 // a reducer in redux is how we specify the application state changes in response to certain actions 
-//Create context
+// Initial state
+const initialState = {
+  transactions: []
+}
 
-export const GlobalContext = createContext(initialState)
+// Create context
 //in order for other components to have access to global state we need to have a provider, so all components need to be wrapped ina provider component 
 //So reducers are basically pure JS functions which take in the previous state and an action and return the newly updated state.
 
-//Provider
-export const GlobalProvider = ({children}) =>{
-const [state,dispatch] = useReducer (AppReducer, initialState)
+export const GlobalContext = createContext(initialState);
 
+// Provider component
+export const GlobalProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(AppReducer, initialState);
 
-//Actions
-
-function deleteTransaction(id){
+  // Actions
+  function deleteTransaction(id) {
     dispatch({
-        type: 'Delete_transaction',
-        payload: id
-    })
-}
+      type: 'DELETE_TRANSACTION',
+      payload: id
+    });
+  }
 
-
-function addTransaction(transaction){
+  function addTransaction(transaction) {
     dispatch({
-        type: 'add_Transaction',
-        payload: transaction
-    })
-}
-return (<GlobalContext.Provider value ={{
+      type: 'ADD_TRANSACTION',
+      payload: transaction
+    });
+  }
+
+  return (<GlobalContext.Provider value={{
     transactions: state.transactions,
     deleteTransaction,
     addTransaction
-}}>
-    {children} 
-</GlobalContext.Provider>)
+  }}>
+    {children}
+  </GlobalContext.Provider>);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
